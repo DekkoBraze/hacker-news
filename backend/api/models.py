@@ -2,6 +2,7 @@ from django.db import models
 
 class NewsItem(models.Model):
     title = models.CharField(max_length=128)
+    text = models.CharField(max_length=1024, default='')
     rating = models.IntegerField(default=0)
     author = models.CharField(max_length=32)
     time_create = models.DateTimeField(auto_now_add=True)

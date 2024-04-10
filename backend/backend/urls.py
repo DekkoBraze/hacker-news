@@ -20,5 +20,6 @@ from api.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/get_news/', NewsItemAPIView.as_view()),
+    path('api/get_news_list/', NewsListAPIView.as_view()),
+    path('api/get_news_item/<int:id>', NewsItemAPIView.as_view()),
 ]
