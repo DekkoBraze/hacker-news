@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom'
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 export default function NewsItem() {    
@@ -34,8 +30,24 @@ export default function NewsItem() {
       
 
     return (
-        <div>
-            {newsItem.title}
-        </div>
+        <Box sx={{width: '80%', margin: '0 auto', backgroundColor: 'darkslategray', borderRadius: '15px'}}>
+            <Box margin='50px'>
+                <Typography variant="h3" gutterBottom>
+                    {newsItem.title}
+                </Typography >
+                <Box display="flex" marginTop={-2} color="gray">
+                    <Typography variant="subtitle1" gutterBottom>
+                        Автор: {newsItem.author}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom marginLeft={5}>
+                        Рейтинг: {newsItem.rating}
+                    </Typography>
+                </Box>
+                <Divider sx={{backgroundColor: "white"}}/>
+                <Typography variant="body1" gutterBottom>
+                    {newsItem.text}
+                </Typography>
+            </Box>
+        </Box>
     );
 }
