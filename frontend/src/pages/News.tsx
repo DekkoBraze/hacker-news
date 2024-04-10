@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import Divider from '@mui/material/Divider';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Box from '@mui/material/Box';
 
 export default function News() {    
+
     interface INewsItem {
         id: number;
         title: string;
@@ -23,10 +31,21 @@ export default function News() {
       
 
     return (
-        <div className="main">
+        <Box>
+            <List>
             {news.map(newsItem => {
-                return <h2 className="newsItem">{newsItem.title}</h2>
+                return (
+                    <Box>
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemText primary={newsItem.title} />
+                        </ListItemButton>
+                    </ListItem>
+                    <Divider sx={{backgroundColor: "gray"}}/>
+                    </Box>
+                )
             })}
-        </div>
+            </List>
+        </Box>
     );
 }
