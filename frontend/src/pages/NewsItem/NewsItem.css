@@ -1,0 +1,23 @@
+.articleWindow {
+    width: 80%;
+    margin: 50px auto 50px;
+    border-radius: 15px;
+    border: 1px solid deepskyblue;
+}
+
+.articleText {
+    color: black;
+}
+
+.divider {
+    background-color: deepskyblue;
+}
+
+.commentBox {
+    background-color: white;
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid deepskyblue;
+    border-radius: 15px;
+}
+

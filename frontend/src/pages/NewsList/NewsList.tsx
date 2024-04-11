@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import './NewsList.css'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 
@@ -36,7 +36,10 @@ export default function NewsList() {
                     <Box key={newsItem.pk}>
                     <ListItem disablePadding>
                         <ListItemButton href={"/item/" + newsItem.pk}>
-                            <ListItemText primary={newsItem.title} />
+                            <ListItemText 
+                            className='listItem' 
+                            primary={newsItem.title} 
+                            secondary={newsItem.author + ' | ' + newsItem.rating + ' | ' + newsItem.time_create}/>
                         </ListItemButton>
                     </ListItem>
                     <Divider sx={{backgroundColor: "gray"}}/>

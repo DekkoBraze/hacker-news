@@ -1,7 +1,7 @@
 import './App.css';
-import NewsList from './pages/NewsList';
-import NewsItem from './pages/NewsItem'
-import Navbar from '../src/components/navbar'
+import NewsList from './pages/NewsList/NewsList';
+import NewsItem from './pages/NewsItem/NewsItem'
+import Navbar from './components/Navbar/Navbar'
 import { Routes, Route } from "react-router-dom";
 
 function App() {
