@@ -7,7 +7,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 interface ICommentBoxProps {
-    newsItemPk: string
+    newsItemPk: string;
+    fetchNewsItem: () => void;
 }
 
 export default function CommentBox(props: ICommentBoxProps) {
@@ -23,6 +24,7 @@ export default function CommentBox(props: ICommentBoxProps) {
     }
 
     function handleSendingComment() {
+      if (commentAuthor !== '' && commentText !== '') {
         var itemJsonData = {
           author: commentAuthor,
           text: commentText,
@@ -40,6 +42,7 @@ export default function CommentBox(props: ICommentBoxProps) {
             if (data.message === 'OK') {
               setCommentAuthor('')
               setCommentText('')
+              props.fetchNewsItem()
             } else {
                 console.log(data.message)
             }})
@@ -47,6 +50,7 @@ export default function CommentBox(props: ICommentBoxProps) {
             console.log(error)
           })
       }
+    }
 
 
   return (

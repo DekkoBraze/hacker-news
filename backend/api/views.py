@@ -18,13 +18,20 @@ class NewsListAPIView(APIView):
 
 class NewsItemAPIView(APIView):
     def get(self, request, id):
-        queryset = NewsItem.objects.get(pk=id)
-        serializer_for_queryset = NewsItemSerializer(
-            instance=queryset, 
+        newsItem = NewsItem.objects.get(pk=id)
+        comments = Comment.objects.filter(newsItem=newsItem)
+        serializer_for_newsItem = NewsItemSerializer(
+            instance=newsItem, 
             many=False
         )
+        serializer_for_comments = CommentSerializer(
+            instance=comments, 
+            many=True
+        )
 
-        return Response(serializer_for_queryset.data, headers={"Access-Control-Allow-Origin": "http://localhost:3000"})
+        return Response({'itemNewsData': serializer_for_newsItem.data, 'comments': serializer_for_comments.data}, 
+                        headers={"Access-Control-Allow-Origin": "http://localhost:3000"})
+
 
 class PostCommentAPIView(APIView):
     parser_classes = (parsers.JSONParser,)

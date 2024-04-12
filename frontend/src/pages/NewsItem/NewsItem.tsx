@@ -1,41 +1,37 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom'
 import './NewsItem.css'
+import { IComment, INewsItem } from '../../Interfaces'
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CommentBox from '../../components/CommentBox/CommentBox'
+import CommentsList from '../../components/CommentsList/CommentsList'
 
-export default function NewsItem() {    
 
-    interface INewsItem {
-        pk?: number;
-        title?: string;
-        text?: string;
-        author?: string;
-        rating?: number;
-        time_create?: Date;
-        time_update?: Date;
-      }
-      
+export default function NewsItem() {          
     const { newsItemPk } = useParams<string>()
     const [newsItem, setNewsItem] = useState<INewsItem>({});
-    
-    
+    const [comments, setComments] = useState<IComment[]>([]);
+
     useEffect(() => {
+        fetchNewsItem()
+    }, [newsItemPk]);
+
+    function fetchNewsItem() {
         fetch('/api/get_news_item/' + newsItemPk)
         .then(response => response.json())
         .then(data => {
-            var correctData = {
-                ...data,
+            var correctItemNewsData = {
+                ...data.itemNewsData,
                 time_create: new Date(data.time_create),
                 time_update: new Date(data.time_update)
             }
-            setNewsItem(correctData)
+            setNewsItem(correctItemNewsData)
+            setComments(data.comments)
         })
         .catch(error => console.error(error));
-    }, [newsItemPk]);
-
+    }
     
     return (
         <Box>
@@ -61,9 +57,8 @@ export default function NewsItem() {
                 </Typography>
             </Box>
             </Box>
-            <CommentBox newsItemPk={newsItemPk!} />
-            <Box className='commentsList'>
-            </Box>
+            <CommentBox newsItemPk={newsItemPk!} fetchNewsItem={fetchNewsItem} />
+            <CommentsList comments={comments}/>
         </Box>
     );
 }

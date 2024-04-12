@@ -17,4 +17,4 @@ class NewsItemSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('author', 'newsItem' 'text', 'time_create', 'time_update')
+        fields = ('pk', 'author', 'newsItem', 'text', 'time_create', 'time_update')
