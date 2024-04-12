@@ -39,7 +39,7 @@ export default function NewsList() {
                             <ListItemText 
                             className='listItem' 
                             primary={newsItem.title} 
-                            secondary={newsItem.author + ' | ' + newsItem.rating + ' | ' + newsItem.time_create}/>
+                            secondary={newsItem.author + ' | ' + newsItem.rating + ' | ' + new Date(newsItem.time_create).toLocaleDateString('en-GB')}/>
                         </ListItemButton>
                     </ListItem>
                     <Divider sx={{backgroundColor: "gray"}}/>

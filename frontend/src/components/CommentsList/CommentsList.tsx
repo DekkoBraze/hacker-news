@@ -1,5 +1,6 @@
 import './CommentsList.css'
 import { IComment } from '../../Interfaces'
+import { Link } from "react-router-dom";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -21,23 +22,25 @@ export default function CommentsList(props: IProps) {
                     Комментарии ({props.comments.length})
             </Typography>
             <Divider sx={{backgroundColor: "gray"}}/>
-            <List>
+            <Stack>
             {props.comments.map(comment => {
                 return (
-                    <Box key={comment.pk}>
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemText 
-                            className='listItem' 
-                            primary={comment.text} 
-                            secondary={comment.author + ' | ' + comment.time_create}/>
-                        </ListItemButton>
-                    </ListItem>
+                    <Box key={comment.pk} margin={1}>
+                        <Typography variant="h6" gutterBottom color='black'>
+                            {comment.text}
+                        </Typography>
+                        <Typography variant="subtitle1" gutterBottom color='gray'>
+                            {comment.author + ' | ' + new Date(comment.time_create).toLocaleDateString('en-GB')}
+                        </Typography>
+                        <Box sx={{marginBottom: 1}}>
+                        <Link to='/' style={{textDecoration: 'none'}}>Раскрыть ветку</Link>
+                        <Link to='/' style={{marginLeft: 10, textDecoration: 'none'}}>Ответить</Link>
+                        </Box>
                     <Divider sx={{backgroundColor: "gray"}}/>
                     </Box>
                 )
             })}
-            </List>
+            </Stack>
         </Box>
     );
 }

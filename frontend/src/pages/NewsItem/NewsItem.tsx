@@ -24,9 +24,10 @@ export default function NewsItem() {
         .then(data => {
             var correctItemNewsData = {
                 ...data.itemNewsData,
-                time_create: new Date(data.time_create),
-                time_update: new Date(data.time_update)
+                time_create: new Date(data.itemNewsData.time_create),
+                time_update: new Date(data.itemNewsData.time_update)
             }
+            
             setNewsItem(correctItemNewsData)
             setComments(data.comments)
         })
