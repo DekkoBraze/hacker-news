@@ -2,6 +2,7 @@ export interface IComment {
     pk: number;
     author: string;
     text: string;
+    children_comments: IComment[];
     time_create: string;
 }
 

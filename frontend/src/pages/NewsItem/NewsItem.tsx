@@ -16,7 +16,7 @@ export default function NewsItem() {
 
     useEffect(() => {
         fetchNewsItem()
-    }, [newsItemPk]);
+    }, []);
 
     function fetchNewsItem() {
         fetch('/api/get_news_item/' + newsItemPk)
@@ -27,7 +27,6 @@ export default function NewsItem() {
                 time_create: new Date(data.itemNewsData.time_create),
                 time_update: new Date(data.itemNewsData.time_update)
             }
-            
             setNewsItem(correctItemNewsData)
             setComments(data.comments)
         })
@@ -58,8 +57,8 @@ export default function NewsItem() {
                 </Typography>
             </Box>
             </Box>
-            <CommentBox newsItemPk={newsItemPk!} fetchNewsItem={fetchNewsItem} />
-            <CommentsList comments={comments}/>
+            <CommentBox newsItemPk={newsItem.pk!} fetchNewsItem={fetchNewsItem} />
+            <CommentsList newsItemPk={newsItem.pk!} comments={comments} fetchNewsItem={fetchNewsItem} />
         </Box>
     );
 }

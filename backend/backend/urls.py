@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/get_news_list/', NewsListAPIView.as_view()),
     path('api/get_news_item/<int:id>', NewsItemAPIView.as_view()),
-    path('api/post_comment/', PostCommentAPIView.as_view()),
+    path('api/post_comment_to_news_item/', PostCommentToNewsItemAPIView.as_view()),
+    path('api/post_comment_to_comment/', PostCommentToCommentAPIView.as_view()),
 ]

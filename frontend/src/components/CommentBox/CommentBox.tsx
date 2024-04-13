@@ -7,7 +7,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 interface ICommentBoxProps {
-    newsItemPk: string;
+    newsItemPk: number;
+    commentPk?: number;
     fetchNewsItem: () => void;
 }
 
@@ -25,30 +26,57 @@ export default function CommentBox(props: ICommentBoxProps) {
 
     function handleSendingComment() {
       if (commentAuthor !== '' && commentText !== '') {
-        var itemJsonData = {
-          author: commentAuthor,
-          text: commentText,
-          newsItemPk: props.newsItemPk,
-        }
-        fetch('/api/post_comment/', {
-          method: 'POST',
-          body: JSON.stringify(itemJsonData),
-          headers: {
-            'Content-Type': 'application/json',
+        if (props.commentPk) {
+          var commentToCommentJsonData = {
+            author: commentAuthor,
+            text: commentText,
+            commentPk: props.commentPk,
           }
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.message === 'OK') {
-              setCommentAuthor('')
-              setCommentText('')
-              props.fetchNewsItem()
-            } else {
-                console.log(data.message)
-            }})
-          .catch((error) => {
-            console.log(error)
+          fetch('/api/post_comment_to_comment/', {
+            method: 'POST',
+            body: JSON.stringify(commentToCommentJsonData),
+            headers: {
+              'Content-Type': 'application/json',
+            }
           })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message === 'OK') {
+                setCommentAuthor('')
+                setCommentText('')
+                props.fetchNewsItem()
+              } else {
+                  console.log(data.message)
+              }})
+            .catch((error) => {
+              console.log(error)
+            })
+        } else {
+          var commentToNewsItemJsonData = {
+            author: commentAuthor,
+            text: commentText,
+            newsItemPk: props.newsItemPk,
+          }
+          fetch('/api/post_comment_to_news_item/', {
+            method: 'POST',
+            body: JSON.stringify(commentToNewsItemJsonData),
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message === 'OK') {
+                setCommentAuthor('')
+                setCommentText('')
+                props.fetchNewsItem()
+              } else {
+                  console.log(data.message)
+              }})
+            .catch((error) => {
+              console.log(error)
+            })
+        }
       }
     }
 

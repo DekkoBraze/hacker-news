@@ -17,4 +17,15 @@ class NewsItemSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('pk', 'author', 'newsItem', 'text', 'time_create', 'time_update')
+        fields = ('pk', 'author', 'children_comments', 'text', 'time_create', 'time_update')
+
+    children_comments = serializers.SerializerMethodField()
+
+    def get_children_comments(self, obj):
+        commentsToComment = Comment.objects.filter(parentComment=obj.pk)
+        serializer_for_comments = CommentSerializer(
+            instance=commentsToComment, 
+            many=True
+        )
+        
+        return serializer_for_comments.data

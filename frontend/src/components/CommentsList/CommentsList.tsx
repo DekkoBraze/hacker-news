@@ -1,20 +1,38 @@
+import { useState } from "react";
 import './CommentsList.css'
 import { IComment } from '../../Interfaces'
-import { Link } from "react-router-dom";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import CommentBox from '../../components/CommentBox/CommentBox'
 
 interface IProps {
+    newsItemPk: number;
     comments: IComment[];
+    fetchNewsItem: () => void;
 }
 
 export default function CommentsList(props: IProps) {    
+    const [answeringOnCommentPk, setAnsweringOnCommentPk] = useState<number>(0);
+    const [lookingCommentThreadPk, setLookingCommentThreadPk] = useState<number>(0);
+
+    function handleAnswerComment(pk: number) {
+        if (answeringOnCommentPk === pk) {
+            setAnsweringOnCommentPk(0)
+        } else {
+            setAnsweringOnCommentPk(pk)
+        }
+    }
+
+    function handleCommentThread(pk: number) {
+        if (lookingCommentThreadPk === pk) {
+            setLookingCommentThreadPk(0)
+        } else {
+            setLookingCommentThreadPk(pk)
+        }
+    }
 
     return (
         <Box className='commentsList'>
@@ -33,9 +51,15 @@ export default function CommentsList(props: IProps) {
                             {comment.author + ' | ' + new Date(comment.time_create).toLocaleDateString('en-GB')}
                         </Typography>
                         <Box sx={{marginBottom: 1}}>
-                        <Link to='/' style={{textDecoration: 'none'}}>Раскрыть ветку</Link>
-                        <Link to='/' style={{marginLeft: 10, textDecoration: 'none'}}>Ответить</Link>
+                            <Button variant="outlined" onClick={() => handleCommentThread(comment.pk)}>Раскрыть ветку</Button>
+                            <Button variant="outlined" sx={{marginLeft: 1}} onClick={() => handleAnswerComment(comment.pk)}>Ответить</Button>
                         </Box>
+                        {comment.pk === answeringOnCommentPk && (
+                            <CommentBox newsItemPk={props.newsItemPk} commentPk={comment.pk} fetchNewsItem={props.fetchNewsItem}/>
+                        )}
+                        {comment.pk === lookingCommentThreadPk && (
+                            <CommentsList newsItemPk={props.newsItemPk} comments={comment.children_comments} fetchNewsItem={props.fetchNewsItem}/>
+                        )}
                     <Divider sx={{backgroundColor: "gray"}}/>
                     </Box>
                 )

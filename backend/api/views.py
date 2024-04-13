@@ -19,13 +19,13 @@ class NewsListAPIView(APIView):
 class NewsItemAPIView(APIView):
     def get(self, request, id):
         newsItem = NewsItem.objects.get(pk=id)
-        comments = Comment.objects.filter(newsItem=newsItem)
+        commentsToNewsItem = Comment.objects.filter(newsItem=newsItem)
         serializer_for_newsItem = NewsItemSerializer(
             instance=newsItem, 
             many=False
         )
         serializer_for_comments = CommentSerializer(
-            instance=comments, 
+            instance=commentsToNewsItem, 
             many=True
         )
 
@@ -33,7 +33,7 @@ class NewsItemAPIView(APIView):
                         headers={"Access-Control-Allow-Origin": "http://localhost:3000"})
 
 
-class PostCommentAPIView(APIView):
+class PostCommentToNewsItemAPIView(APIView):
     parser_classes = (parsers.JSONParser,)
 
     def post(self, request):
@@ -42,6 +42,22 @@ class PostCommentAPIView(APIView):
             author=request.data['author'], 
             text=request.data['text'], 
             newsItem=newsItem, 
+            time_create=datetime.now(), 
+            time_update=datetime.now())
+        new_comment.save()
+
+        return Response({'message': 'OK'}, headers={"Access-Control-Allow-Origin": "http://localhost:3000"})
+    
+
+class PostCommentToCommentAPIView(APIView):
+    parser_classes = (parsers.JSONParser,)
+
+    def post(self, request):
+        parent = Comment.objects.get(pk=request.data['commentPk'])
+        new_comment = Comment(
+            author=request.data['author'], 
+            text=request.data['text'], 
+            parentComment=parent,
             time_create=datetime.now(), 
             time_update=datetime.now())
         new_comment.save()
