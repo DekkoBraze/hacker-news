@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import './NewsList.css'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -10,6 +11,7 @@ import Button from '@mui/material/Button';
 
 export default function NewsList() {    
     
+    // Интерфейс новости в списке на главной странице
     interface INewsItemPreview {
         pk: number;
         title: string;
@@ -22,6 +24,7 @@ export default function NewsList() {
 
     useEffect(() => {
         fetchNewsList()
+        // Обновляем данные каждую минуту
         setInterval(fetchNewsList, 60000);
     }, []);
 
@@ -30,7 +33,6 @@ export default function NewsList() {
         .then(response => response.json())
         .then(data => {
             setNews(data)
-            console.log('update')
         })
         .catch(error => console.error(error));
     }
@@ -48,7 +50,7 @@ export default function NewsList() {
                 return (
                     <Box key={newsItem.pk}>
                     <ListItem disablePadding>
-                        <ListItemButton href={"/item/" + newsItem.pk}>
+                        <ListItemButton LinkComponent={props => <Link {...props} to={"/item/" + newsItem.pk}/>} href={"/item/" + newsItem.pk} >
                             <ListItemText 
                             className='listItem' 
                             primary={newsItem.title} 

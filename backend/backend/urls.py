@@ -20,8 +20,12 @@ from api.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Данные для формирования превью новостей в списке
     path('api/get_news_list/', NewsListAPIView.as_view()),
+    # Полные данные новости + комментарии
     path('api/get_news_item/<int:id>', NewsItemAPIView.as_view()),
+    # Создание корневого комментария
     path('api/post_comment_to_news_item/', PostCommentToNewsItemAPIView.as_view()),
+    # Создание вложенного комментария
     path('api/post_comment_to_comment/', PostCommentToCommentAPIView.as_view()),
 ]

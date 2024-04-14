@@ -5,6 +5,7 @@ from datetime import datetime
 from .models import *
 from .serializers import *
 
+
 class NewsListAPIView(APIView):
     def get(self, request):
         queryset = NewsItem.objects.all()
@@ -19,7 +20,7 @@ class NewsListAPIView(APIView):
 class NewsItemAPIView(APIView):
     def get(self, request, id):
         newsItem = NewsItem.objects.get(pk=id)
-        commentsToNewsItem = Comment.objects.filter(newsItem=newsItem)
+        commentsToNewsItem = Comment.objects.filter(newsItem=newsItem)[:100] # Берем только первые 100 newsItem
         serializer_for_newsItem = NewsItemSerializer(
             instance=newsItem, 
             many=False

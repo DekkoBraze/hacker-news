@@ -17,12 +17,24 @@ interface IProps {
 export default function CommentsList(props: IProps) {    
     const [answeringOnCommentPk, setAnsweringOnCommentPk] = useState<number>(0);
     const [lookingCommentThreadPk, setLookingCommentThreadPk] = useState<number>(0);
-    const commentsListType: () => string = () => {
+
+    function commentsListType() {
         if (props.newsItemPk) {
           return 'commentToNewsItem'
         } else {
           return 'commentToComment'
         }
+    }
+    
+    function commentsCount(comments: IComment[]): number {
+        var c = 0
+        comments.map((comment) => {
+            c += 1
+            if (comment.children_comments.length !== 0) {
+                c += commentsCount(comment.children_comments)
+            }
+        })
+        return c
     }
 
     function handleAnswerComment(pk: number) {
@@ -47,7 +59,7 @@ export default function CommentsList(props: IProps) {
                 <Box>
                     <Box display='inline-flex'>
                     <Typography variant="h4" gutterBottom color='black' marginLeft={3} marginTop={2} >
-                        Комментарии
+                        Комментарии ({commentsCount(props.comments)})
                     </Typography>
                         <Button 
                         variant="outlined" 

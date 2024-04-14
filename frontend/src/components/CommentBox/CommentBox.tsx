@@ -15,7 +15,8 @@ interface ICommentBoxProps {
 export default function CommentBox(props: ICommentBoxProps) {
     const [commentText, setCommentText] = useState('')
     const [commentAuthor, setCommentAuthor] = useState('')
-    const commentBoxType: () => string = () => {
+    
+    function commentBoxType() {
       if (props.newsItemPk) {
         return 'commentToNewsItem'
       } else {
@@ -34,6 +35,7 @@ export default function CommentBox(props: ICommentBoxProps) {
     function handleSendingComment() {
       if (commentAuthor !== '' && commentText !== '') {
         if (props.commentPk) {
+          // Для вложенного комментария
           var commentToCommentJsonData = {
             author: commentAuthor,
             text: commentText,
@@ -59,6 +61,7 @@ export default function CommentBox(props: ICommentBoxProps) {
               console.log(error)
             })
         } else {
+          // Для корневого комментария
           var commentToNewsItemJsonData = {
             author: commentAuthor,
             text: commentText,

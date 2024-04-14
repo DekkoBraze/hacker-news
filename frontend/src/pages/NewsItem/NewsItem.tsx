@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom'
+import Link from '@mui/material/Link';
 import './NewsItem.css'
 import { IComment, INewsItem } from '../../Interfaces'
 import Divider from '@mui/material/Divider';
@@ -51,14 +52,12 @@ export default function NewsItem() {
                         Рейтинг: {newsItem.rating}
                     </Typography>
                 </Box>
-                <Divider className='divider'/>
-                <Typography className="articleText" variant="body1" gutterBottom>
-                    {newsItem.text}
-                </Typography>
+                <Divider className='divider' sx={{marginBottom: 1}}/>
+                <Link href={newsItem.news_link}>{newsItem.news_link}</Link>
             </Box>
             </Box>
-            <CommentBox newsItemPk={newsItem.pk!} fetchNewsItem={fetchNewsItem} />
             <CommentsList newsItemPk={newsItem.pk!} comments={comments} fetchNewsItem={fetchNewsItem} />
+            <CommentBox newsItemPk={newsItem.pk!} fetchNewsItem={fetchNewsItem} />
         </Box>
     );
 }

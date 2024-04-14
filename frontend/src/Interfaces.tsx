@@ -9,7 +9,7 @@ export interface IComment {
 export interface INewsItem {
     pk?: number;
     title?: string;
-    text?: string;
+    news_link?: string;
     author?: string;
     rating?: number;
     time_create?: Date;

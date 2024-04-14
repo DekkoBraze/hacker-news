@@ -1,17 +1,19 @@
 from rest_framework import serializers
 from .models import *
  
- 
+
+# Для превью новости в списке на главной странице 
 class NewsPreviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsItem
         fields = ('pk', 'title', 'author', 'rating', 'time_create')
 
 
+# Для страницы новости
 class NewsItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsItem
-        fields = ('pk', 'title', 'text', 'author', 'rating', 'time_create', 'time_update')
+        fields = ('pk', 'title', 'news_link', 'author', 'rating', 'time_create', 'time_update')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -19,6 +21,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('pk', 'author', 'children_comments', 'text', 'time_create', 'time_update')
 
+    # Вложенные комментарии для данного
     children_comments = serializers.SerializerMethodField()
 
     def get_children_comments(self, obj):
