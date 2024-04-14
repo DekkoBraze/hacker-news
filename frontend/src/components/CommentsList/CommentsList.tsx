@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import CommentBox from '../../components/CommentBox/CommentBox'
 
 interface IProps {
-    newsItemPk: number;
+    newsItemPk?: number;
     comments: IComment[];
     fetchNewsItem: () => void;
 }
@@ -17,6 +17,13 @@ interface IProps {
 export default function CommentsList(props: IProps) {    
     const [answeringOnCommentPk, setAnsweringOnCommentPk] = useState<number>(0);
     const [lookingCommentThreadPk, setLookingCommentThreadPk] = useState<number>(0);
+    const commentsListType: () => string = () => {
+        if (props.newsItemPk) {
+          return 'commentToNewsItem'
+        } else {
+          return 'commentToComment'
+        }
+    }
 
     function handleAnswerComment(pk: number) {
         if (answeringOnCommentPk === pk) {
@@ -35,11 +42,23 @@ export default function CommentsList(props: IProps) {
     }
 
     return (
-        <Box className='commentsList'>
-            <Typography variant="h4" gutterBottom color='black' margin={3}>
-                    Комментарии ({props.comments.length})
-            </Typography>
-            <Divider sx={{backgroundColor: "gray"}}/>
+        <Box className={commentsListType()}>
+            {commentsListType() === 'commentToNewsItem' && (
+                <Box>
+                    <Box display='inline-flex'>
+                    <Typography variant="h4" gutterBottom color='black' marginLeft={3} marginTop={2} >
+                        Комментарии
+                    </Typography>
+                        <Button 
+                        variant="outlined" 
+                        sx={{marginBottom: 2, marginTop: 2}} 
+                        onClick={() => props.fetchNewsItem()}>
+                            Обновить
+                        </Button>
+                    </Box>
+                    <Divider sx={{backgroundColor: "gray"}}/>
+                </Box>
+            )}
             <Stack>
             {props.comments.map(comment => {
                 return (
@@ -51,14 +70,16 @@ export default function CommentsList(props: IProps) {
                             {comment.author + ' | ' + new Date(comment.time_create).toLocaleDateString('en-GB')}
                         </Typography>
                         <Box sx={{marginBottom: 1}}>
-                            <Button variant="outlined" onClick={() => handleCommentThread(comment.pk)}>Раскрыть ветку</Button>
-                            <Button variant="outlined" sx={{marginLeft: 1}} onClick={() => handleAnswerComment(comment.pk)}>Ответить</Button>
+                            <Button variant="outlined" onClick={() => handleAnswerComment(comment.pk)}>Ответить</Button>
+                            {comment.children_comments.length !== 0 && (
+                                <Button variant="outlined" sx={{marginLeft: 1}} onClick={() => handleCommentThread(comment.pk)}>Раскрыть ветку</Button>
+                            )}
                         </Box>
                         {comment.pk === answeringOnCommentPk && (
-                            <CommentBox newsItemPk={props.newsItemPk} commentPk={comment.pk} fetchNewsItem={props.fetchNewsItem}/>
+                            <CommentBox commentPk={comment.pk} fetchNewsItem={props.fetchNewsItem}/>
                         )}
                         {comment.pk === lookingCommentThreadPk && (
-                            <CommentsList newsItemPk={props.newsItemPk} comments={comment.children_comments} fetchNewsItem={props.fetchNewsItem}/>
+                            <CommentsList comments={comment.children_comments} fetchNewsItem={props.fetchNewsItem}/>
                         )}
                     <Divider sx={{backgroundColor: "gray"}}/>
                     </Box>

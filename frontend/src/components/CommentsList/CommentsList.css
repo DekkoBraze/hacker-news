@@ -1,7 +1,13 @@
-.commentsList {
+.commentToNewsItem {
     background-color: white;
     width: 50%;
     margin: 1% auto;
+    border: 1px solid deepskyblue;
+    border-radius: 15px;
+}
+
+.commentToComment {
+    background-color: white;
     border: 1px solid deepskyblue;
     border-radius: 15px;
 }

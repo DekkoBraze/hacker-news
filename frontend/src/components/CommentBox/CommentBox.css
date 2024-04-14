@@ -1,7 +1,14 @@
-.commentBox {
+.commentToNewsItem {
     background-color: white;
     width: 50%;
     margin: 0 auto;
+    border: 1px solid deepskyblue;
+    border-radius: 15px;
+}
+
+.commentToComment {
+    background-color: white;
+    margin-bottom: 10px;
     border: 1px solid deepskyblue;
     border-radius: 15px;
 }

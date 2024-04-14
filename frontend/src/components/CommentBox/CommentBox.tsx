@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 interface ICommentBoxProps {
-    newsItemPk: number;
+    newsItemPk?: number;
     commentPk?: number;
     fetchNewsItem: () => void;
 }
@@ -15,6 +15,13 @@ interface ICommentBoxProps {
 export default function CommentBox(props: ICommentBoxProps) {
     const [commentText, setCommentText] = useState('')
     const [commentAuthor, setCommentAuthor] = useState('')
+    const commentBoxType: () => string = () => {
+      if (props.newsItemPk) {
+        return 'commentToNewsItem'
+      } else {
+        return 'commentToComment'
+      }
+    }
 
     function handleCommentAuthor(e: React.ChangeEvent<HTMLInputElement>) {
         setCommentAuthor(e.target.value)
@@ -80,9 +87,8 @@ export default function CommentBox(props: ICommentBoxProps) {
       }
     }
 
-
   return (
-    <Box className='commentBox' >
+    <Box className={commentBoxType()} >
             <Stack padding={3} spacing={2}>
                 <Typography variant="h4" gutterBottom color='black'>
                     Оставить комментарий

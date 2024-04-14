@@ -9,7 +9,7 @@ class NewsItem(models.Model):
     time_update = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['time_create']
+        ordering = ['-time_create']
 
     def __str__(self):
         return self.title
