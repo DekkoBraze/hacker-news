@@ -1,13 +1,12 @@
 .bar {
-    width: 100%;
     height: 7vh;
     background-color: deepskyblue;
+    align-items: center;
+    justify-content: center;
     display: flex;
 }
 
 .title {
     color: white;
     font-size: 4vh;
-    margin-top: 1vh;
-    margin-left: 43vw;
 }

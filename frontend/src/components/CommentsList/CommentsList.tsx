@@ -57,18 +57,26 @@ export default function CommentsList(props: IProps) {
         <Box className={commentsListType()}>
             {commentsListType() === 'commentToNewsItem' && (
                 <Box>
-                    <Box display='inline-flex'>
-                    <Typography variant="h4" gutterBottom color='black' marginLeft={3} marginTop={2} >
+                    <Box display='inline-flex' flexWrap='wrap' width='100%'>
+                    <Typography 
+                    variant="h4" 
+                    sx={{fontSize: '3.5vh', wordBreak: 'break-all'}} 
+                    gutterBottom 
+                    color='black' 
+                    marginLeft='1vw' 
+                    marginTop='2vh' >
                         Комментарии ({commentsCount(props.comments)})
                     </Typography>
                         <Button 
                         variant="outlined" 
-                        sx={{marginBottom: 2, marginTop: 2}} 
+                        sx={{marginBottom: '2vh', marginTop: '2vh', marginLeft: 'auto', marginRight: '2vw'}} 
                         onClick={() => props.fetchNewsItem()}>
                             Обновить
                         </Button>
                     </Box>
-                    <Divider sx={{backgroundColor: "gray"}}/>
+                    {props.comments.length !== 0 && (
+                        <Divider sx={{backgroundColor: "gray"}}/>
+                    )}
                 </Box>
             )}
             <Stack>
@@ -84,7 +92,7 @@ export default function CommentsList(props: IProps) {
                         <Box sx={{marginBottom: 1}}>
                             <Button variant="outlined" onClick={() => handleAnswerComment(comment.pk)}>Ответить</Button>
                             {comment.children_comments.length !== 0 && (
-                                <Button variant="outlined" sx={{marginLeft: 1}} onClick={() => handleCommentThread(comment.pk)}>Раскрыть ветку</Button>
+                                <Button variant="outlined" sx={{marginLeft: 1}} onClick={() => handleCommentThread(comment.pk)}>Раскрыть ответы</Button>
                             )}
                         </Box>
                         {comment.pk === answeringOnCommentPk && (
@@ -93,7 +101,10 @@ export default function CommentsList(props: IProps) {
                         {comment.pk === lookingCommentThreadPk && (
                             <CommentsList comments={comment.children_comments} fetchNewsItem={props.fetchNewsItem}/>
                         )}
-                    <Divider sx={{backgroundColor: "gray"}}/>
+                    
+                    {props.comments.length !== 0 && (
+                        <Divider sx={{backgroundColor: "gray"}}/>
+                    )}
                     </Box>
                 )
             })}

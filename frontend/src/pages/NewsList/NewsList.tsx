@@ -41,10 +41,11 @@ export default function NewsList() {
         <Box>
             <Button 
                 variant="outlined" 
-                sx={{marginBottom: 2, marginTop: 2}} 
+                sx={{margin: 1}}
                 onClick={() => fetchNewsList()}>
                     Обновить
             </Button>
+            <Divider sx={{backgroundColor: "gray", marginBottom: -1}}/>
             <List>
             {news.map(newsItem => {
                 return (

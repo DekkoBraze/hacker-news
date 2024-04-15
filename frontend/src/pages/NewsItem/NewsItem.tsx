@@ -37,23 +37,23 @@ export default function NewsItem() {
     return (
         <Box>
             <Box className='articleWindow'>
-            <Box margin='50px'>
-                <Typography className="articleText" variant="h3" gutterBottom>
+            <Box margin='4vmin'>
+                <Typography className="articleTitle" sx={{fontSize: '4vh'}} variant="h3" gutterBottom>
                     {newsItem.title}
                 </Typography >
-                <Box display="flex" marginTop={-2} color="gray">
-                    <Typography variant="subtitle1" gutterBottom>
-                        Автор: {newsItem.author}
+                <Box className='subtitleBox'>
+                    <Typography sx={{fontSize: '2vh'}} variant="subtitle1" gutterBottom>
+                        Автор: {newsItem.author} 
                     </Typography>
-                    <Typography variant="subtitle1" gutterBottom marginLeft={5}>
-                        Дата публикации: {newsItem.time_create?.toLocaleDateString('en-GB')}
+                    <Typography sx={{fontSize: '2vh', marginLeft: '1vw'}} variant="subtitle1" gutterBottom>
+                        Дата публикации: {newsItem.time_create?.toLocaleDateString('en-GB')} 
                     </Typography>
-                    <Typography variant="subtitle1" gutterBottom marginLeft={5}>
+                    <Typography sx={{fontSize: '2vh', marginLeft: '1vw'}} variant="subtitle1" gutterBottom>
                         Рейтинг: {newsItem.rating}
                     </Typography>
                 </Box>
                 <Divider className='divider' sx={{marginBottom: 1}}/>
-                <Link href={newsItem.news_link}>{newsItem.news_link}</Link>
+                <Link sx={{fontSize: '2vh', wordWrap: 'break-word'}} href={newsItem.news_link}>{newsItem.news_link}</Link>
             </Box>
             </Box>
             <CommentsList newsItemPk={newsItem.pk!} comments={comments} fetchNewsItem={fetchNewsItem} />

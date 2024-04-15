@@ -92,8 +92,8 @@ export default function CommentBox(props: ICommentBoxProps) {
 
   return (
     <Box className={commentBoxType()} >
-            <Stack padding={3} spacing={2}>
-                <Typography variant="h4" gutterBottom color='black'>
+            <Stack margin='2vw' spacing='2.5vh'>
+                <Typography sx={{fontSize: '4vh', wordBreak: 'break-word'}} variant="h4" gutterBottom color='black'>
                     Оставить комментарий
                 </Typography>
                 <TextField 

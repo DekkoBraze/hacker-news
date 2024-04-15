@@ -1,12 +1,19 @@
 .articleWindow {
     width: 50%;
-    margin: 50px auto 50px;
+    margin: 3vh auto 3vh;
     border-radius: 15px;
     border: 1px solid deepskyblue;
 }
 
-.articleText {
+.articleTitle {
     color: black;
+}
+
+.subtitleBox {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -1.5vh auto 0.1vh;
+    color: gray;
 }
 
 .divider {
