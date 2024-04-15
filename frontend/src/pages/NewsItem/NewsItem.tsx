@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from 'react-router-dom'
 import Link from '@mui/material/Link';
 import './NewsItem.css'
@@ -15,11 +15,7 @@ export default function NewsItem() {
     const [newsItem, setNewsItem] = useState<INewsItem>({});
     const [comments, setComments] = useState<IComment[]>([]);
 
-    useEffect(() => {
-        fetchNewsItem()
-    }, []);
-
-    function fetchNewsItem() {
+    const fetchNewsItem = useCallback(() => {
         fetch('/api/get_news_item/' + newsItemPk)
         .then(response => response.json())
         .then(data => {
@@ -32,7 +28,11 @@ export default function NewsItem() {
             setComments(data.comments)
         })
         .catch(error => console.error(error));
-    }
+    }, [newsItemPk])
+
+    useEffect(() => {
+        fetchNewsItem()
+    }, [fetchNewsItem]);
     
     return (
         <Box>
